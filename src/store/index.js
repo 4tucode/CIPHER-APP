@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
 import { auth } from '@/db/firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import {db} from '@/db/firebase'
+import {doc, setDoc, getDoc} from 'firebase/firestore'
 export default createStore({
   state: {
     user: {
@@ -38,6 +40,34 @@ export default createStore({
       } catch (error) {
         commit('SET_LOGIN_STATE', false)
         console.error(error.message); 
+      }
+    },
+    async addPassword({state}, newPassword){
+      if (!state.user) return
+      try {      
+        state.passwords.push(newPassword)  
+        let newPasswords = {
+          passwords: state.passwords
+        }
+        const docRef = doc ( db, "users", state.user.uid )
+        await setDoc(docRef, newPasswords)
+      } catch (error) {
+        console.log("Problemas", error.message)
+      }
+    },
+    async getPasswords({state}){
+      if (!state.user) return
+      try {
+        const docRef = doc ( db, "users", state.user.uid )
+        const docSnap = await getDoc(docRef)
+        if(docSnap.exists){
+          state.passwords = docSnap.data().passwords
+        }else{
+          console.log("Problemas",);
+        }
+      } catch (error) {
+        console.log(error.message);
+        
       }
     }
   },

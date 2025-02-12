@@ -4,6 +4,7 @@
         <form @submit.prevent="registerUser">
             <input type="email" name="" v-model="email" placeholder="Email">
             <input type="password" name="" v-model="password" placeholder="Password">
+            <p>¿Ya tienes cuenta? <router-link to="/">Inicia sesión</router-link></p>
             <button type="submit">Registrarse</button>
         </form>
     </section>

@@ -2,20 +2,22 @@
   <router-view/>
 </template>
 <script>
-// import {auth} from '@/db/firebase'
+import {auth} from '@/db/firebase'
+import {mapMutations} from 'vuex'
 export default{
-  // mounted(){
-  //   auth.onAuthStateChanged( (user)=> {
-  //     if(user){
-  //       const rutaActual = this.$route.name
-  //       if(rutaActual === "passwords"){
-  //         this.$router.push({name: 'passwords'})
-  //       } 
-  //     }else{
-  //       this.$router.push({name: 'login'})
-  //     }
-  //   })
-  // }
+  methods:{
+    ...mapMutations(['SET_USER_DATA']),
+    asignarUsuario(){
+      auth.onAuthStateChanged( (user)=> {
+        if (user){
+          this.SET_USER_DATA(user)
+        }
+      })
+    }
+  },
+  mounted(){
+    this.asignarUsuario()
+  }
 }
 </script>
 <style>
