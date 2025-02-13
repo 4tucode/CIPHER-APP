@@ -56,11 +56,7 @@ export default {
     }
   },
   mounted(){
-    this.getPasswords()
-    console.log(this.passwords);
-    if(this.passwords){
-      this.codePasswords()
-    }   
+    this.getPasswords()  
   }
 }
 </script>

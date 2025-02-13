@@ -44,6 +44,8 @@ export default createStore({
     },
     async addPassword({state}, newPassword){
       if (!state.user) return
+      console.log(state.passwords);
+      
       try {      
         state.passwords.push(newPassword)  
         let newPasswords = {
@@ -60,11 +62,15 @@ export default createStore({
       try {
         const docRef = doc ( db, "users", state.user.uid )
         const docSnap = await getDoc(docRef)
-        if(docSnap.exists){
-          state.passwords = docSnap.data().passwords
+        if(docSnap.data() == undefined){
+          state.passwords = []
         }else{
-          console.log("Problemas",);
-        }
+          if(docSnap.exists){
+            state.passwords = docSnap.data().passwords
+          }else{
+            console.log("Problemas",);
+          }
+        } 
       } catch (error) {
         console.log(error.message);
         
