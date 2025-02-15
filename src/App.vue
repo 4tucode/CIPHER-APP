@@ -11,6 +11,8 @@ export default{
       auth.onAuthStateChanged( (user)=> {
         if (user){
           this.SET_USER_DATA(user)
+        }else{
+          this.$router.push({name: 'login'})
         }
       })
     }

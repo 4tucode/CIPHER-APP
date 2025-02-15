@@ -62,8 +62,9 @@ export default createStore({
       try {
         const docRef = doc ( db, "users", state.user.uid )
         const docSnap = await getDoc(docRef)
+        // si no encuentro al usuario en la tabla de la base de datos
         if(docSnap.data() == undefined){
-          state.passwords = []
+          state.passwords = [] // devuelvo un array vacío
         }else{
           if(docSnap.exists){
             state.passwords = docSnap.data().passwords
@@ -73,7 +74,6 @@ export default createStore({
         } 
       } catch (error) {
         console.log(error.message);
-        
       }
     }
   },

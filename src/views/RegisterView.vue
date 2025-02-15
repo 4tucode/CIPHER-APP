@@ -42,7 +42,7 @@
                 this.register({email:this.email, password: this.password})
                 setTimeout( ()=> {
                     if(this.loginState){
-                    toast.success("Usuario registrado con éxito!😍")
+                        toast.success("Usuario registrado con éxito!😍")
                     setTimeout( ()=> {
                         this.$router.push({name:'passwords'})
                     }, 1000)
